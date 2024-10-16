@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import logging
 
 # Включаем логирование
@@ -8,32 +8,27 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 # Вставьте ваш токен
 TOKEN = '7691317600:AAF5_Q-M0imjIeVbw71HNUWl0k5I7mrBDKw'
 
-def start(update: Update, context: CallbackContext) -> None:
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Отправляет сообщение, когда бот получает команду /start."""
-    update.message.reply_text('Привет! Я бот для игры в Крестики-Нолики. Напишите /play, чтобы начать игру!')
+    await update.message.reply_text('Привет! Я бот для игры в Крестики-Нолики. Напишите /play, чтобы начать игру!')
 
-def play(update: Update, context: CallbackContext) -> None:
+async def play(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Запускает игру."""
     # Здесь вы можете добавить логику для начала игры
-    update.message.reply_text('Игра начинается!')
+    await update.message.reply_text('Игра начинается!')
 
-def main() -> None:
+async def main() -> None:
     """Запускает бота."""
-    # Создаем объект Updater и передаем ему токен вашего бота
-    updater = Updater(TOKEN)
-
-    # Получаем диспетчер для регистрации обработчиков
-    dispatcher = updater.dispatcher
+    # Создаем объект Application и передаем ему токен вашего бота
+    application = ApplicationBuilder().token(TOKEN).build()
 
     # Добавляем обработчики команд
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("play", play))
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("play", play))
 
     # Начинаем получать обновления от Telegram
-    updater.start_polling()
-
-    # Бот будет работать до тех пор, пока не будет остановлен
-    updater.idle()
+    await application.run_polling()
 
 if __name__ == '__main__':
-    main()
+    import asyncio
+    asyncio.run(main())
