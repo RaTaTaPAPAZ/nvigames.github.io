@@ -1,7 +1,9 @@
+import nest_asyncio
+nest_asyncio.apply()
+import asyncio
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import logging
-import asyncio
 
 # Включаем логирование
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -25,6 +27,4 @@ async def main() -> None:
     await application.run_polling()
 
 if __name__ == '__main__':
-    # Получаем текущий цикл событий и запускаем основной метод
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    asyncio.run(main())
