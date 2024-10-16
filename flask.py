@@ -16,5 +16,5 @@ def webhook():
 
 if __name__ == '__main__':
     # Установите вебхук
-    requests.get(f'{URL}setWebhook?url=https://github.com/RaTaTaPAPAZ/nvigames.github.io.git/webhook')
+    requests.get(f'{URL}setWebhook?url=https://ratatapapaz.github.io/nvigames.github.io//webhook')
     app.run(port=5000)
