@@ -1,6 +1,7 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import logging
+import asyncio
 
 # Включаем логирование
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -14,21 +15,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def play(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Запускает игру."""
-    # Здесь вы можете добавить логику для начала игры
     await update.message.reply_text('Игра начинается!')
 
 async def main() -> None:
     """Запускает бота."""
-    # Создаем объект Application и передаем ему токен вашего бота
     application = ApplicationBuilder().token(TOKEN).build()
-
-    # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("play", play))
-
-    # Начинаем получать обновления от Telegram
     await application.run_polling()
 
 if __name__ == '__main__':
-    import asyncio
-    asyncio.run(main())
+    # Получаем текущий цикл событий и запускаем основной метод
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
