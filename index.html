@@ -1,0 +1,134 @@
+Крестики-нолики
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-нолики</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .cell:hover {
+            background-color: #e0e0e0;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="board" id="board"></div>
+    <div class="message" id="message"></div>
+    <div class="currentPlayer" id="currentPlayer"></div>
+    <button id="restartButton">Начать заново</button>
+
+    <script>
+        const board = document.getElementById('board');
+        const message = document.getElementById('message');
+        const restartButton = document.getElementById('restartButton');
+
+        let currentPlayer = 'X';
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        let isGameActive = true;
+
+        const winningConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+        function createBoard() {
+            gameState.fill('');
+            board.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.addEventListener('click', () => handleCellClick(i));
+                board.appendChild(cell);
+            }
+            message.textContent = `Ход игрока:${currentPlayer}`;
+        }
+
+        function handleCellClick(index) {
+            if (gameState[index] !== '' || !isGameActive) {
+                return;
+            }
+            gameState[index] = currentPlayer;
+            renderBoard();
+            checkResult();
+        }
+
+        function renderBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach((cell, index) => {
+                cell.textContent = gameState[index];
+            });
+        }
+
+        function checkResult() {
+            let roundWon = false;
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (gameState[a] === ''||gameState[b] === ''||gameState[c] === '') {
+                    continue;
+                }
+                if (gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                    roundWon = true;
+                    break;
+                }
+            }
+            if (roundWon) {
+                message.textContent = `Игрок ${currentPlayer} выиграл!`;
+                isGameActive = false;
+                return;
+            }
+            if (!gameState.includes('')) {
+                message.textContent = 'Ничья!';
+                isGameActive = false;
+                return;
+            }
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            message.textContent = `Ход игрока: ${currentPlayer}`;
+        }
+
+        function restartGame() {
+            currentPlayer = 'X';
+            isGameActive = true;
+            createBoard();
+        }
+
+        restartButton.addEventListener('click', restartGame);
+        createBoard();
+    </script>
+</body>
+</html>
