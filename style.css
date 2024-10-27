@@ -23,11 +23,11 @@ body {
 .container span {
     position: absolute;
     left: 0;
-    width: 32px;
-    height: 6px;
+    width: 24px;
+    height: 4px;
     background: #2c4766;
-    border-radius: 8px;
-    transform-origin: 128px;
+    border-radius: 6px;
+    transform-origin: 98px;
     transform: scale(2.2) rotate(calc(var(--i) * (360deg / 50)));
     animation: animateBlink 3s linear infinite;
     animation-delay: calc(var(--i) * (3s / 50));
