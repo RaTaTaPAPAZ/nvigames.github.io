@@ -14,8 +14,8 @@ body {
 }
 .container {
     position: relative;
-    width: 196px;
-    height: 196px;
+    width: 160px;
+    height: 160px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,7 @@ body {
     height: 4px;
     background: #2c4766;
     border-radius: 6px;
-    transform-origin: 98px;
+    transform-origin: 80px;
     transform: scale(2.2) rotate(calc(var(--i) * (360deg / 50)));
     animation: animateBlink 3s linear infinite;
     animation-delay: calc(var(--i) * (3s / 50));
@@ -43,6 +43,7 @@ body {
 .login-box {
     position: absolute;
     width: 300px;
+    height: 500px;
 }
 .login-box form {
     width: 100%;
@@ -52,6 +53,7 @@ h2 {
     font-size: 2em;
     color: #0ef;
     text-align: center;
+    margin-bottom: 130px;
 }
 .input-box {
     position: relative;
@@ -114,6 +116,7 @@ h2 {
     font-size: 1em;
     color: #1f293a;
     font-weight: 600;
+    margin-top: 130px;
 }
 .signup-link {
     margin: 10px 0 10px;
