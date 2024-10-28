@@ -13,15 +13,28 @@ body {
     background: #1f293a;
 }
 .home{
-    position: absolute;
-    width: 300px;
-    height: 500px;
+    display: inline-block;
 }
-h1{
+h1{  
     font-size: 2em;
     color: #0ef;
-    text-align: center;
-    margin-bottom: 130px;
+    letter-spacing: 10px;
+    border-right: 5px solid;
+    font-family: monospace;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: 
+        typing 2s steps(8),
+        cursor .4s step-end infinite alternate;
+}
+
+@keyframes cursor {
+    50% {   border-color: transparent }
+}
+
+@keyframes typing {
+    from { width: 0%;}
 }
 .back-test {
     width: 100%;
